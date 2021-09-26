@@ -139,3 +139,13 @@ main{
     height: 50px;
     border: 1px solid black;
 }
+
+.title{
+    display: inline;
+}
+
+.btnSubmitSchedule{
+    padding: 5px 5px;
+    display: inline-block;
+    border: 1px solid #333;
+}

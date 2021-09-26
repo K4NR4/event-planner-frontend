@@ -4,6 +4,7 @@ const currentUserId = parsedUserInfo.userid;
 const currentEvent = localStorage.getItem('id');
 const callendar = document.querySelector('#callendar')
 const calendarTitle = document.querySelector('#calendartitle')
+const btnSubmitSchedule = document.querySelector('#btnSubmitSchedule')
 const scheduledDays = [];
 let newDate;
 // console.log(currentEvent)
@@ -120,6 +121,7 @@ const loadOtherEvents = function(){
         userhours.forEach(el=>{
             timeslots.forEach(el2=>{
                 if(el.includes(el2)){
+                    document.getElementById(`${el2}`).innerHTML += '| '
                     document.getElementById(`${el2}`).classList.add('active')
                     scheduledDays.push(el2)
                 }
@@ -130,6 +132,39 @@ const loadOtherEvents = function(){
     }
 
 }
+console.log(currentUserId)
+const currentEventInt = parseInt(currentEvent, 10)
+
+
+btnSubmitSchedule.addEventListener('click', ()=>{
+    const newSchedulePayload = {
+        "eventid" :currentEventInt,
+        "userid" :currentUserId,
+        "schedulearray" : JSON.stringify(scheduledDays),
+    }
+ 
+
+    const fetchOptions = {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newSchedulePayload)
+    }
+    
+    
+    fetch(`${APIAddress}/api/schedules/eventschedule`, fetchOptions)
+
+
+})
+
+
+
+
+
+
+
+
 
 
 
