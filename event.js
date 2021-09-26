@@ -65,9 +65,10 @@ const loadOtherEvents = function(){
 
     const getAllSchedules = function(data){
         const arrayOfSchedules = [];
-
+        let temporary;
         data.schedules.forEach(el =>{
-            arrayOfSchedules.push(el.schedulearray)
+            temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
+            arrayOfSchedules.push(temporary)
             
             return arrayOfSchedules;
             
