@@ -9,7 +9,7 @@ const newEventForm = document.querySelector('#newEventForm')
 const btnSubmit = document.querySelector('#btnSubmit')
 const events = [];
 console.log(currentUserId)
-
+const APIAddress = 'http://127.0.0.1:8888'
 window.addEventListener('load', () => {
     fetch(`${APIAddress}/api/users/${currentUserId}`)
     .then(response=>response.json())
