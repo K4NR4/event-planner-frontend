@@ -16,12 +16,10 @@ window.addEventListener('load', ()=>{
     // .then(response => console.log(response.eventweek))
     .then(response => displayCurrentEvent(response))
 
-
     loadOtherEvents()
-
 })
-const calendarTemplate = [];
 
+const calendarTemplate = [];
 
     const displayCurrentEvent = function(event){
         let parsedAccountinfo = JSON.parse(window.localStorage.accountInfo)
@@ -41,18 +39,18 @@ const calendarTemplate = [];
             newDate = new Date (date)
 
         
-        for(let i = 0; i < 7; i++){
-    
-            for(let j = 1; j<13; j++){
-                callendar.innerHTML += `
-                <div class="table-day" style="grid-row: ${j}/${j+1};" id= "${newDate}"></div>
-                `
-                newDate.setHours(newDate.getHours() + 2 )
+            for(let i = 0; i < 7; i++){
+        
+                for(let j = 1; j<13; j++){
+                    callendar.innerHTML += `
+                    <div class="table-day" style="grid-row: ${j}/${j+1};" id= "${newDate}"></div>
+                    `
+                    newDate.setHours(newDate.getHours() + 2 )
+                }
+                
             }
-            
         }
-        }
-    }
+    };
 
     // const eventData = [];
 
@@ -77,9 +75,6 @@ const loadOtherEvents = function(){
                 temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
                 arrayOfSchedules.push(temporary)
             }
-
-
-            
         })
         
 
@@ -98,7 +93,7 @@ const loadOtherEvents = function(){
         setTimeout(compareSchedules(arrayOfSchedules,eventdata, arrayOfUserSchedule),1000)
 
         // console.log(eventdata)
-    }
+    };
 
     const compareSchedules = function(hours, timeslots, userhours){
         let counter = 0;
@@ -106,17 +101,16 @@ const loadOtherEvents = function(){
 
         hours.forEach(el=>{
 
-
             timeslots.forEach(el2=>{
                 if(el.includes(el2)){
                     document.getElementById(`${el2}`).innerHTML += '| '
                     document.getElementById(`${el2}`).style.background=`rgb(255, 204, ${rgba})`
                     rgba += 2;
                 }else{
-                    // console.log('nope')
-                }
-            })
-        })
+                    console.log('nope');
+                };
+            });
+        });
 
         userhours.forEach(el=>{
             timeslots.forEach(el2=>{
@@ -129,7 +123,7 @@ const loadOtherEvents = function(){
 
         })
 
-    }
+    };
 
 }
 console.log(currentUserId)
@@ -200,4 +194,4 @@ btnSubmitSchedule.addEventListener('click', ()=>{
     dayTimePicker()
     
     
-    }, 1000)
+    }, 1000);

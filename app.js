@@ -54,8 +54,6 @@ setTimeout(function(){
     })
 },1000)
 
-
-
 btnCreateEvent.addEventListener('click', ()=>{
     newEventForm.classList.toggle('hidden')
 })
@@ -90,17 +88,11 @@ btnSubmit.addEventListener('click', ()=>{
     },
     body: JSON.stringify(newEventSubmission[0])
 }
-    fetch(APIAddress + `/api/schedules`, fetchOptions)
-    // .then(response => {
-    //     let MyStatus = respose.status;
-    //     if(MyStatus == 200){
-
-    //     }
-    // })
-    // .then(response => console.log(response))
-    
-
-
-})
+    fetch(APIAddress + '/api/schedules', fetchOptions)
+        .then(response => {
+            console.log(response);
+            newEventForm.classList.toggle('hidden');
+        });
+});
 
 
