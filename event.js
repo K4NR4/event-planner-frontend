@@ -3,6 +3,7 @@ const parsedUserInfo = JSON.parse(userInfoFromlocalStorage)
 const currentUserId = parsedUserInfo.userid;
 const currentEvent = localStorage.getItem('id');
 const callendar = document.querySelector('#callendar')
+const calendarTitle = document.querySelector('#calendartitle')
 const scheduledDays = [];
 let newDate;
 // console.log(currentEvent)
@@ -12,22 +13,33 @@ window.addEventListener('load', ()=>{
     fetch(`${APIAddress}/api/schedules/${currentEvent}`)
     .then(response=>response.json())
     // .then(response => console.log(response.eventweek))
-    .then(response => displayCurrentEvent(response.eventweek))
+    .then(response => displayCurrentEvent(response))
+
+
+
+
+    loadOtherEvents()
 })
 const calendarTemplate = [];
 
 
-
-
-    const displayCurrentEvent = function(week){
+    const displayCurrentEvent = function(event){
+        let parsedAccountinfo = JSON.parse(window.localStorage.accountInfo)
+        let username = parsedAccountinfo.username;
+        calendarTitle.innerHTML = `
+        <div class='eventTitle'> ${event.eventname}</div>
+        <div class='eventDescription'>What: ${event.eventdescription}</div>
+        <div class='eventWeek'>When:${event.eventweek}</div>
+        <div class='eventOwner'>Who: ${username}</div>
+        `
         
         fetch('./calendar.json')
         .then(response => response.json())
-        .then(response => buildCallendar(Object.values(response[week])))
-    
+        .then(response => buildCallendar(Object.values(response[event.eventweek])))
+
         const buildCallendar = function(date){
             newDate = new Date (date)
-        
+
         
         for(let i = 0; i < 7; i++){
     
@@ -45,7 +57,54 @@ const calendarTemplate = [];
 
 
 
+    const eventData = []
 
+const loadOtherEvents = function(){
+    fetch(`${APIAddress}/api/schedules/${currentEvent}`)
+    .then(response => response.json())
+    .then(response => getAllSchedules(response))
+
+
+
+    const getAllSchedules = function(data){
+        const arrayOfSchedules = [];
+        let parsedSchedule;
+        let jsonSchedule;
+        data.schedules.forEach(el =>{
+            console.log(el)
+            console.log(el.schedulearray)
+
+        })
+        // console.log(arrayOfSchedules)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
     setTimeout(function(){
         const dayTimeArray = Array.from(document.querySelectorAll('.table-day'))
         const dayTimePicker = function(){
@@ -77,4 +136,4 @@ const calendarTemplate = [];
     }
     dayTimePicker()
     
-    }, 400)
+    }, 1000)

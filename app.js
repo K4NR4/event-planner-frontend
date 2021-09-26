@@ -45,7 +45,7 @@ setTimeout(function(){
     allEvents = document.querySelectorAll('.event')
     allEvents.forEach(el =>{
         el.addEventListener('click', ()=>{
-            // window.location.href='event.html'
+            window.location.href='event.html'
             localStorage.setItem('id', el.id)
             let ourID = localStorage.getItem('id')
             console.log(`OUR ID IS ${ourID}`)
@@ -56,19 +56,22 @@ setTimeout(function(){
 
 
 
-
-
-
 btnCreateEvent.addEventListener('click', ()=>{
     newEventForm.classList.toggle('hidden')
 })
 const newEventSubmission =[];
 btnSubmit.addEventListener('click', ()=>{
 
+    
+
     const eventName = document.querySelector('#formEventName').value;
     const eventWeek = document.querySelector('#formEventWeek').value;
     const eventDescription = document.querySelector('#formEventDescription').value
 
+    // check if all fields are populated
+    if(!eventName && !eventWeek && !eventDescription){
+        return alert("you cannot leave empty fields")
+    }
 
     newEventSubmission.push(
         {
@@ -80,7 +83,7 @@ btnSubmit.addEventListener('click', ()=>{
     )
 
     console.log(newEventSubmission[0])
-const fetchOptions = {
+    const fetchOptions = {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -88,8 +91,15 @@ const fetchOptions = {
     body: JSON.stringify(newEventSubmission[0])
 }
     fetch(APIAddress + `/api/schedules`, fetchOptions)
-    .then(response => response.json)
-    .then(response => console.log(response))
+    // .then(response => {
+    //     let MyStatus = respose.status;
+    //     if(MyStatus == 200){
+
+    //     }
+    // })
+    // .then(response => console.log(response))
+
+
 })
 
 
