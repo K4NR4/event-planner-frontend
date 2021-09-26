@@ -7,7 +7,7 @@ const calendarTitle = document.querySelector('#calendartitle')
 const scheduledDays = [];
 let newDate;
 // console.log(currentEvent)
-const APIAddress = 'http://127.0.0.1:8176'
+const APIAddress = 'http://127.0.0.1:8888'
 
 window.addEventListener('load', ()=>{
     fetch(`${APIAddress}/api/schedules/${currentEvent}`)
@@ -83,18 +83,22 @@ const loadOtherEvents = function(){
 
         setTimeout(compareSchedules(arrayOfSchedules,eventdata),1000)
 
-        console.log(eventdata)
+        // console.log(eventdata)
     }
 
     const compareSchedules = function(hours, timeslots){
+        let counter = 0;
+        let rgba = 153;
             hours.forEach(el=>{
                 // console.log(el)
                 timeslots.forEach(el2 =>{
-                    if(el2.includes(el)){
-                        
+                    if(el.includes(el2)){
+                        console.log(el2)
+                       document.getElementById(`${el2}`).innerHTML += "|"
+                       rgba = rgba+10
+                       document.getElementById(`${el2}`).style =`background-color: rgb(255, 204, ${rgba})`
                     }else{
-                        console.log(`EL = ${el}` )
-                        console.log(` EL2 = ${el2}`)
+                        
                     }
                 })
             })
