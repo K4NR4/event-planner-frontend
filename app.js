@@ -10,9 +10,7 @@ const btnSubmit = document.querySelector('#btnSubmit')
 const events = [];
 console.log(currentUserId)
 
-const APIAddress = 'http://127.0.0.1:8176'
-
-window.addEventListener('load', ()=>{
+window.addEventListener('load', () => {
     fetch(`${APIAddress}/api/users/${currentUserId}`)
     .then(response=>response.json())
     .then(response => loadAllUserEvents(response))
@@ -45,7 +43,7 @@ console.log(events)
 let allEvents = []
 setTimeout(function(){
     allEvents = document.querySelectorAll('.event')
-    allEvents.forEach(el =>{
+    allEvents.forEach(el => {
         el.addEventListener('click', ()=>{
             window.location.href='event.html'
             localStorage.setItem('id', el.id)
