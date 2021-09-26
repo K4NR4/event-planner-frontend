@@ -7,7 +7,7 @@ const calendarTitle = document.querySelector('#calendartitle')
 const scheduledDays = [];
 let newDate;
 // console.log(currentEvent)
-const APIAddress = 'http://127.0.0.1:8176'
+const APIAddress = 'http://127.0.0.1:8343'
 
 window.addEventListener('load', ()=>{
     fetch(`${APIAddress}/api/schedules/${currentEvent}`)
