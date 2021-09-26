@@ -23,6 +23,7 @@ const loadAllUserEvents = function(info){
     <h2>Welcome ${currentUserName}</h2>
     `;
     info.forEach(el =>{
+        console.log(el)
         dashboardMain.innerHTML += `
         <div class='event' id='${el.eventid}'>
             <div class='event-title'>
@@ -38,6 +39,7 @@ const loadAllUserEvents = function(info){
     })
 
 }
+
 console.log(events)
 
 let allEvents = []
