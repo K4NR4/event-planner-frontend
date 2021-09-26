@@ -4,6 +4,9 @@ const currentUserId = parsedUserInfo.userid;
 const currentUserName = parsedUserInfo.username;
 const dashboardMain = document.querySelector('#dashboard-main')
 const dashboardHeader = document.querySelector('#dashboard-header')
+const btnCreateEvent = document.querySelector('#btnCreateEvent')
+const newEventForm = document.querySelector('#newEventForm')
+const btnSubmit = document.querySelector('#btnSubmit')
 const events = [];
 console.log(currentUserId)
 
@@ -16,10 +19,12 @@ window.addEventListener('load', ()=>{
 })
 
 const loadAllUserEvents = function(info){
+    dashboardHeader.innerHTML += `
+    <h2>Welcome ${currentUserName}</h2>
+    `;
     info.forEach(el =>{
-        dashboardHeader.innerHTML = `Welcome ${currentUserName}`;
         dashboardMain.innerHTML += `
-        <div class='event'>
+        <div class='event' id='${el.eventid}'>
             <div class='event-title'>
                 <h2>${el.eventname}</h2>
             </div>
@@ -31,14 +36,60 @@ const loadAllUserEvents = function(info){
         `
         events.push(el)
     })
+
 }
 console.log(events)
+
 let allEvents = []
 setTimeout(function(){
     allEvents = document.querySelectorAll('.event')
     allEvents.forEach(el =>{
         el.addEventListener('click', ()=>{
+            // window.location.href='event.html'
+            localStorage.setItem('id', el.id)
+            let ourID = localStorage.getItem('id')
+            console.log(`OUR ID IS ${ourID}`)
             window.location.href='event.html'
         })
     })
 },1000)
+
+
+
+
+
+
+btnCreateEvent.addEventListener('click', ()=>{
+    newEventForm.classList.toggle('hidden')
+})
+const newEventSubmission =[];
+btnSubmit.addEventListener('click', ()=>{
+
+    const eventName = document.querySelector('#formEventName').value;
+    const eventWeek = document.querySelector('#formEventWeek').value;
+    const eventDescription = document.querySelector('#formEventDescription').value
+
+
+    newEventSubmission.push(
+        {
+            "eventname" : eventName,
+            "eventdescription" : eventDescription,
+            "eventweek" : eventWeek,
+            "userid" : currentUserId
+        }
+    )
+
+    console.log(newEventSubmission[0])
+const fetchOptions = {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(newEventSubmission[0])
+}
+    fetch(APIAddress + `/api/schedules`, fetchOptions)
+    .then(response => response.json)
+    .then(response => console.log(response))
+})
+
+
