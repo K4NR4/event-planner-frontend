@@ -90,16 +90,16 @@ btnSubmit.addEventListener('click', ()=>{
     },
     body: JSON.stringify(newEventSubmission[0])
 }
-    fetch(APIAddress + `/api/schedules`, fetchOptions)
-    // .then(response => {
-    //     let MyStatus = respose.status;
-    //     if(MyStatus == 200){
-
-    //     }
-    // })
-    // .then(response => console.log(response))
-
-
-})
+    fetch(APIAddress + '/api/schedules', fetchOptions)
+        .then(response => {
+            let MyStatus = response.status;
+            if(MyStatus == 200){}
+            return response;
+        })
+        .then(response => {
+            console.log(response);
+            newEventForm.classList.toggle('hidden');
+        });
+});
 
 

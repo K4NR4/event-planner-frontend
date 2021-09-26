@@ -27,7 +27,6 @@ html{
     grid-template-columns: repeat(4, 1fr);
     align-items: center;
     justify-content: center;
-
 }
 
 .event{
@@ -42,8 +41,7 @@ html{
     display: inline;
     padding: 10px 30px ;
     border: 1px solid #333;
-    box-shadow: 3px 3px 0 rgb(0, 0, 0);
-    
+    box-shadow: 3px 3px 0 rgb(0, 0, 0);  
 }
 
 .btnCreateEvent:active{
@@ -69,9 +67,6 @@ html{
     border: 1px solid black;
     background: linen;
 }
-
-
-
 
 main{
     width: 1200px;
@@ -118,8 +113,6 @@ main{
     grid-template-rows: repeat(12, 1fr);
     background-color: lightgoldenrodyellow
 }
-
-
 
 .table-day{
     width: 100%;

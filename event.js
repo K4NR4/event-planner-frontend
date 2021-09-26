@@ -15,12 +15,10 @@ window.addEventListener('load', ()=>{
     // .then(response => console.log(response.eventweek))
     .then(response => displayCurrentEvent(response))
 
-
     loadOtherEvents()
-
 })
-const calendarTemplate = [];
 
+const calendarTemplate = [];
 
     const displayCurrentEvent = function(event){
         let parsedAccountinfo = JSON.parse(window.localStorage.accountInfo)
@@ -40,16 +38,16 @@ const calendarTemplate = [];
             newDate = new Date (date)
 
         
-        for(let i = 0; i < 7; i++){
-    
-            for(let j = 1; j<13; j++){
-                callendar.innerHTML += `
-                <div class="table-day" style="grid-row: ${j}/${j+1};" id= "${newDate}"></div>
-                `
-                newDate.setHours(newDate.getHours() + 2 )
+            for(let i = 0; i < 7; i++){
+        
+                for(let j = 1; j<13; j++){
+                    callendar.innerHTML += `
+                    <div class="table-day" style="grid-row: ${j}/${j+1};" id= "${newDate}"></div>
+                    `
+                    newDate.setHours(newDate.getHours() + 2 )
+                }
+                
             }
-            
-        }
         }
     };
 
@@ -76,9 +74,6 @@ const loadOtherEvents = function(){
                 temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
                 arrayOfSchedules.push(temporary)
             }
-
-
-            
         })
         
 

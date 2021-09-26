@@ -12,9 +12,7 @@ const logoutButton = document.querySelector('#logoutButton');
 const publicArticle = document.querySelector('#publicArticle');
 const privateArticle = document.querySelector('#privateArticle');
 
-// (CHANGE TO YOUR RESPECTIVE PORT FOR THE API!!!!!!!!!!!)
 const APIAddress = 'http://127.0.0.1:8888' // Connecting to the api server 
-// (CHANGE TO YOUR RESPECTIVE PORT FOR THE API!!!!!!!!!!!)
 
 loginButton.addEventListener('click', (e) => { // Login request is made
     if (userEmail.value && userPassword.value) {
