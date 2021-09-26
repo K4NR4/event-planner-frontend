@@ -1,3 +1,33 @@
+
+html{
+    box-sizing: border-box;
+}
+
 .hidden {
     display: none;
+}
+
+.dashboard-header{
+    width: 1100px;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 100px;
+}
+
+.dashboard-main{
+    width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+    justify-content: center;
+
+}
+
+.event{
+    width: 220px;
+    height: 150px;
+    border: 1px solid #333;
+    padding: 20px;
+    box-shadow: 2px 2px 2px rgb(0, 0, 0);
 }
