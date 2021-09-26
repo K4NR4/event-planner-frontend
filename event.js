@@ -53,7 +53,6 @@ const calendarTemplate = [];
         }
     }
 
-
     // const eventData = [];
 
 const loadOtherEvents = function(){
@@ -76,10 +75,16 @@ const loadOtherEvents = function(){
         // console.log(arrayOfSchedules)
 
         const temp = document.querySelectorAll('.table-day');
-        const eventdata = [];
+        const eventdata = []
         temp.forEach(el=>{
             eventdata.push(el.id)
         })
+        console.log(eventdata)
+        // const eventdata = [];
+        // temp.forEach(el=>{
+        //     eventdata.push(el.id)
+        //     console.log(eventdata)
+        // })
 
         setTimeout(compareSchedules(arrayOfSchedules,eventdata),1000)
 
@@ -88,20 +93,25 @@ const loadOtherEvents = function(){
 
     const compareSchedules = function(hours, timeslots){
         let counter = 0;
-        let rgba = 153;
-            hours.forEach(el=>{
-                // console.log(el)
-                timeslots.forEach(el2 =>{
-                    if(el.includes(el2)){
-                        console.log(el2)
-                       document.getElementById(`${el2}`).innerHTML += "|"
-                       rgba = rgba+10
-                       document.getElementById(`${el2}`).style =`background-color: rgb(255, 204, ${rgba})`
-                    }else{
-                        
-                    }
-                })
+        let rgba = 0;
+
+
+            
+        hours.forEach(el=>{
+
+
+            timeslots.forEach(el2=>{
+                if(el.includes(el2)){
+                    document.getElementById(`${el2}`).innerHTML += '| '
+                    document.getElementById(`${el2}`).style.background=`rgb(255, 204, ${rgba})`
+                    rgba += 2;
+                }else{
+                    console.log('nope')
+                }
             })
+        })
+
+
     }
 
     // setTimeout(function(){
@@ -109,25 +119,6 @@ const loadOtherEvents = function(){
     // },1000)
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
