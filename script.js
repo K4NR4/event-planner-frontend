@@ -13,7 +13,7 @@ const publicArticle = document.querySelector('#publicArticle');
 const privateArticle = document.querySelector('#privateArticle');
 
 // (CHANGE TO YOUR RESPECTIVE PORT FOR THE API!!!!!!!!!!!)
-const APIAddress = 'http://127.0.0.1:8176' // Connecting to the api server 
+const APIAddress = 'http://127.0.0.1:8343' // Connecting to the api server 
 // (CHANGE TO YOUR RESPECTIVE PORT FOR THE API!!!!!!!!!!!)
 
 loginButton.addEventListener('click', (e) => { // Login request is made
@@ -37,6 +37,7 @@ loginButton.addEventListener('click', (e) => { // Login request is made
         window.localStorage.setItem('x-authenticate-token', token);
         // console.log(token);
         let MyStatus = response.status;
+        
         if(MyStatus == 200){
             window.location.href = 'dashboard.html'
         }
@@ -87,8 +88,15 @@ createAccount.addEventListener('click', (e) => { // Create account request is ma
         if(token){        
             window.localStorage.setItem('x-authenticate-token', token);
             console.log(token);
+            
+            let MyStatus = response.status;
+        
+            if(MyStatus == 200){
+                window.location.href = 'dashboard.html'
+            }
 
             return response.json()
+            
         } else {
             reject({statusCode: 409, errorMessage: 'Conflict: user email is already in use.'})
         };
@@ -117,14 +125,15 @@ createAccount.addEventListener('click', (e) => { // Create account request is ma
 });
 
 logoutButton.addEventListener('click', (e) => { // Logout button
+    window.location.href='index.html';
     window.localStorage.removeItem('x-authenticate-token'); // Removes Token from header
     window.localStorage.removeItem('accountInfo'); // Removes account information 
     console.log('Account logged out'); 
 
+    
     loginDiv.classList.toggle('hidden');
     logoutDiv.classList.toggle('hidden');
     createAccountFormDiv.classList.toggle('hidden');
-
 });
 
 window.addEventListener('load', (e) => { // Loading the different dummy endpoints depending on state
@@ -138,30 +147,30 @@ window.addEventListener('load', (e) => { // Loading the different dummy endpoint
     if (token) fetchOptions.headers['x-authenticate-token'] = token;
     console.log(fetchOptions.headers);
     
-    // render public article
-    fetchOptions.method = 'GET';
-    fetch(APIAddress + '/api/dummies/public', fetchOptions)
-    .then(response => {
-        return response.json()
-    })
-    .then(data => {
-        publicArticle.innerHTML = data.message
-    })
-    .catch(error => console.log(error));
+//     // render public article
+//     fetchOptions.method = 'GET';
+//     fetch(APIAddress + '/api/dummies/public', fetchOptions)
+//     .then(response => {
+//         return response.json()
+//     })
+//     .then(data => {
+//         publicArticle.innerHTML = data.message
+//     })
+//     .catch(error => console.log(error));
 
-    // render private article when logged in
-    if(token){
-    fetchOptions.method = 'GET';
-    fetch(APIAddress + '/api/dummies/private', fetchOptions)
-        .then(response => {
-            return response.json()
-        })
-        .then(data => {
-            privateArticle.innerHTML = data.message;
-        })
-        .catch(error => console.log(error));
+//     // render private article when logged in
+//     if(token){
+//     fetchOptions.method = 'GET';
+//     fetch(APIAddress + '/api/dummies/private', fetchOptions)
+//         .then(response => {
+//             return response.json()
+//         })
+//         .then(data => {
+//             privateArticle.innerHTML = data.message;
+//         })
+//         .catch(error => console.log(error));
 
-    }
+//     }
 
     // render login/logout divs on the respective conditions
     if (token) {

@@ -6,12 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TimePlanner Dashboard</title>
     <script src="app.js" defer></script>
+    <script src="script.js" defer></script>
     <link rel="stylesheet" href="style.css">
+    
 </head>
 <body>
+    <div id="logOut">
+        <button id="logoutButton">Logout</button>
+    </div>
     <header class="dashboard-header" id="dashboard-header"></header>
     <main class="dashboard-main" id="dashboard-main">
 
     </main>
+
 </body>
+
+<script> // script for logging out
+    logoutButton.addEventListener('click', (e) => { // Logout button
+        window.location.href='index.html' // redirect to login page 
+        window.localStorage.removeItem('x-authenticate-token'); // Removes Token from header
+        window.localStorage.removeItem('accountInfo'); // Removes account information 
+        console.log('Account logged out'); 
+});
+</script>
 </html>
