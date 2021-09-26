@@ -35,11 +35,12 @@ loginButton.addEventListener('click', (e) => { // Login request is made
     .then(response => {
         const token = response.headers.get('x-authenticate-token');
         window.localStorage.setItem('x-authenticate-token', token);
-        // console.log(token);
+        // console.log(token); 
         let MyStatus = response.status;
         
         if(MyStatus == 200){
-            window.location.href = 'dashboard.html'
+
+            window.location.href = `dashboard.html`
         }
         
         return response.json()

@@ -14,11 +14,40 @@
     <div id="logOut">
         <button id="logoutButton">Logout</button>
     </div>
-    <header class="dashboard-header" id="dashboard-header"></header>
+    <header class="dashboard-header" id="dashboard-header">
+
+    </header>
+    <div class="btnholder">
+        <h2 id='btnCreateEvent' class='btnCreateEvent'>Create an event +</h2>
+    </div>
     <main class="dashboard-main" id="dashboard-main">
 
     </main>
 
+
+    <div id="newEventForm" class="newEventForm hidden">
+        <h2>Create new Event</h2>
+        <form action="">
+            <fieldset>
+                <p>
+                    <label for="formEventName">Event Name: </label>
+                    <input type="text" id="formEventName">
+                </p>
+                <p>
+                    <label for="formEventDescription">Event Description: </label>
+                    <input type="text" id="formEventDescription">
+                </p>
+                <p>
+                    <label for="formEventWeek">Event Week: </label>
+                    <input type="number" min="1" max="52" id="formEventWeek">
+                </p>
+                <p>
+                    <div id="btnSubmit">Create an event</div>
+                </p>
+
+            </fieldset>
+        </form>
+    </div>
 </body>
 
 <script> // script for logging out
