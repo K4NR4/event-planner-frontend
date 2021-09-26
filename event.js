@@ -51,7 +51,7 @@ const calendarTemplate = [];
             
         }
         }
-    }
+    };
 
     // const eventData = [];
 
@@ -89,7 +89,7 @@ const loadOtherEvents = function(){
         setTimeout(compareSchedules(arrayOfSchedules,eventdata),1000)
 
         // console.log(eventdata)
-    }
+    };
 
     const compareSchedules = function(hours, timeslots){
         let counter = 0;
@@ -99,26 +99,25 @@ const loadOtherEvents = function(){
             
         hours.forEach(el=>{
 
-
             timeslots.forEach(el2=>{
                 if(el.includes(el2)){
                     document.getElementById(`${el2}`).innerHTML += '| '
                     document.getElementById(`${el2}`).style.background=`rgb(255, 204, ${rgba})`
                     rgba += 2;
                 }else{
-                    console.log('nope')
-                }
-            })
-        })
+                    console.log('nope');
+                };
+            });
+        });
 
 
-    }
+    };
 
     // setTimeout(function(){
     //     getAllSchedules(data)
     // },1000)
 
-}
+};
 
 
 
@@ -158,4 +157,4 @@ const loadOtherEvents = function(){
     dayTimePicker()
     
     
-    }, 1000)
+    }, 1000);
