@@ -92,11 +92,6 @@ btnSubmit.addEventListener('click', ()=>{
 }
     fetch(APIAddress + '/api/schedules', fetchOptions)
         .then(response => {
-            let MyStatus = response.status;
-            if(MyStatus == 200){}
-            return response;
-        })
-        .then(response => {
             console.log(response);
             newEventForm.classList.toggle('hidden');
         });
