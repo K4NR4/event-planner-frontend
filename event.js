@@ -16,9 +16,8 @@ window.addEventListener('load', ()=>{
     .then(response => displayCurrentEvent(response))
 
 
-
-
     loadOtherEvents()
+
 })
 const calendarTemplate = [];
 
@@ -55,9 +54,7 @@ const calendarTemplate = [];
     }
 
 
-
-
-    const eventData = []
+    // const eventData = [];
 
 const loadOtherEvents = function(){
     fetch(`${APIAddress}/api/schedules/${currentEvent}`)
@@ -68,15 +65,44 @@ const loadOtherEvents = function(){
 
     const getAllSchedules = function(data){
         const arrayOfSchedules = [];
-        let parsedSchedule;
-        let jsonSchedule;
+        let temporary;
         data.schedules.forEach(el =>{
-            console.log(el)
-            console.log(el.schedulearray)
-
+            temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
+            arrayOfSchedules.push(temporary)
+            
+            return arrayOfSchedules;
+            
         })
         // console.log(arrayOfSchedules)
+
+        const temp = document.querySelectorAll('.table-day');
+        const eventdata = [];
+        temp.forEach(el=>{
+            eventdata.push(el.id)
+        })
+
+        setTimeout(compareSchedules(arrayOfSchedules,eventdata),1000)
+
+        console.log(eventdata)
     }
+
+    const compareSchedules = function(hours, timeslots){
+            hours.forEach(el=>{
+                // console.log(el)
+                timeslots.forEach(el2 =>{
+                    if(el2.includes(el)){
+                        
+                    }else{
+                        console.log(`EL = ${el}` )
+                        console.log(` EL2 = ${el2}`)
+                    }
+                })
+            })
+    }
+
+    // setTimeout(function(){
+    //     getAllSchedules(data)
+    // },1000)
 
 }
 
@@ -135,5 +161,6 @@ const loadOtherEvents = function(){
         })
     }
     dayTimePicker()
+    
     
     }, 1000)
