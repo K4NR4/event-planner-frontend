@@ -57,7 +57,6 @@ const loadAllUserEventsNoTitle = function(info){
     })
 }
 
-// console.log(events)
 
 
 btnCreateEvent.addEventListener('click', ()=>{
