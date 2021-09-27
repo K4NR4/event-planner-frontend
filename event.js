@@ -160,8 +160,7 @@ btnSubmitSchedule.addEventListener('click', () => {
         'schedulearray': JSON.stringify(scheduledDays),
     }
     
- 
-
+    
     const fetchOptions = {
         method: "POST",
         headers: {'Content-Type': 'application/json'},
@@ -170,6 +169,12 @@ btnSubmitSchedule.addEventListener('click', () => {
 
     
     fetch(`${APIAddress}/api/schedules/eventschedule`, fetchOptions)
+
+    setTimeout(function(){
+
+        window.location.reload()
+    },500)
+    
 
 })
 
