@@ -6,16 +6,16 @@ const callendar = document.querySelector('#callendar')
 const calendarTitle = document.querySelector('#calendartitle')
 const btnSubmitSchedule = document.querySelector('#btnSubmitSchedule')
 const scheduledDays = [];
+
 let newDate;
-// console.log(currentEvent)
+console.log(currentEvent)
+
 const APIAddress = 'http://127.0.0.1:8888'
 
 window.addEventListener('load', ()=>{
     fetch(`${APIAddress}/api/schedules/${currentEvent}`)
     .then(response=>response.json())
-    // .then(response => console.log(response.eventweek))
     .then(response => displayCurrentEvent(response))
-
 
     loadOtherEvents()
 
@@ -24,6 +24,30 @@ const calendarTemplate = [];
 
 
     const displayCurrentEvent = function(event){
+
+        if(!event.eventname){
+            fetch(`${APIAddress}/api/schedules/dashboard/${currentUserId}`)
+            .then(response=>response.json())
+            .then(data => {
+                if(!data.eventname){
+                    data.forEach(el=>{
+                        if(el.eventid==currentEvent){
+                            calendarTitle.innerHTML = `
+                            <div class='eventTitle'> ${el.eventname}</div>
+                            <div class='eventDescription'>What: ${el.eventdescription}</div>
+                            <div class='eventWeek'>When:${el.eventweek}</div>
+                            <div class='eventOwner'>Who: ${el.username}</div>
+                            `
+                            fetch('./calendar.json')
+        .then(response => response.json())
+        .then(response => buildCallendar(Object.values(response[event.eventweek])))
+                        }
+                    })
+
+                }
+            })
+
+        }
         let parsedAccountinfo = JSON.parse(window.localStorage.accountInfo)
         let username = parsedAccountinfo.username;
         calendarTitle.innerHTML = `
@@ -140,7 +164,7 @@ btnSubmitSchedule.addEventListener('click', ()=>{
     const newSchedulePayload = {
         "eventid" :currentEventInt,
         "userid" :currentUserId,
-        "schedulearray" : JSON.stringify(scheduledDays),
+        "schedulearray" : scheduledDays,
     }
  
 
