@@ -59,8 +59,6 @@ const loadOtherEvents = function(){
     .then(response => response.json())
     .then(response => getAllSchedules(response))
 
-
-
     const getAllSchedules = function(data){
         const totalSchedules = [];
         const arrayOfSchedules = [];
@@ -128,39 +126,27 @@ const loadOtherEvents = function(){
 }
 console.log(currentUserId)
 const currentEventInt = parseInt(currentEvent, 10)
+console.log(typeof(currentEventInt));
 
-
-btnSubmitSchedule.addEventListener('click', ()=>{
+btnSubmitSchedule.addEventListener('click', () => {
     const newSchedulePayload = {
-        "eventid" :currentEventInt,
-        "userid" :currentUserId,
-        "schedulearray" : JSON.stringify(scheduledDays),
+        'eventid': currentEventInt,
+        'userid': currentUserId,
+        'schedulearray': JSON.stringify(scheduledDays),
     }
+    
  
 
     const fetchOptions = {
         method: "POST",
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(newSchedulePayload)
     }
-    
+
     
     fetch(`${APIAddress}/api/schedules/eventschedule`, fetchOptions)
 
-
 })
-
-
-
-
-
-
-
-
-
-
 
     setTimeout(function(){
         const dayTimeArray = Array.from(document.querySelectorAll('.table-day'))
