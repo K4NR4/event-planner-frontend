@@ -10,33 +10,48 @@ const btnSubmit = document.querySelector('#btnSubmit')
 const events = [];
 console.log(currentUserId)
 const APIAddress = 'http://127.0.0.1:8888'
-window.addEventListener('load', () => {
-    fetch(`${APIAddress}/api/users/${currentUserId}`)
-    .then(response=>response.json())
-    .then(response => loadAllUserEvents(response))
-})
 
-const loadAllUserEvents = function(info){
-    dashboardHeader.innerHTML += `
-    <h2>Welcome ${currentUserName}</h2>
-    `;
-    info.forEach(el =>{
-        console.log(el)
-        dashboardMain.innerHTML += `
-        <div class='event' id='${el.eventid}'>
-            <div class='event-title'>
-                <h2>${el.eventname}</h2>
-            </div>
-            <div class='event-body'>
-                <h3>${el.eventdescription}</h3>
-                <h4>Event week: ${el.eventweek}</h4>
-            </div>
-        </div>
-        `
-        events.push(el)
+
+
+    window.addEventListener('load', () => {
+        const token = window.localStorage.getItem('x-authenticate-token');
+        const fetchOptions = {
+            headers: {'Content-Type': 'application/json'}
+        }
+
+        if (token) fetchOptions.headers['x-authenticate-token'] = token;
+        console.log(fetchOptions.headers);
+        
+        // render public article
+        fetchOptions.method = 'GET';
+        if(token){
+            fetch(`${APIAddress}/api/users/${currentUserId}`, fetchOptions)
+            .then(response=>response.json())
+            .then(response => loadAllUserEvents(response))
+        }
     })
 
-}
+    const loadAllUserEvents = function(info){
+        dashboardHeader.innerHTML += `
+        <h2>Welcome ${currentUserName}</h2>
+        `;
+        info.forEach(el =>{
+            console.log(el)
+            dashboardMain.innerHTML += `
+            <div class='event' id='${el.eventid}'>
+                <div class='event-title'>
+                    <h2>${el.eventname}</h2>
+                </div>
+                <div class='event-body'>
+                    <h3>${el.eventdescription}</h3>
+                    <h4>Event week: ${el.eventweek}</h4>
+                </div>
+            </div>
+            `
+            events.push(el)
+        })
+
+    }
 
 console.log(events)
 

@@ -1,3 +1,8 @@
+// exposed header 
+// /api/schedules/eventschedule
+// /api/schedules/:eventid
+// /api/schedules/eventschedule
+
 const userInfoFromlocalStorage = window.localStorage.accountInfo
 const parsedUserInfo = JSON.parse(userInfoFromlocalStorage)
 const currentUserId = parsedUserInfo.userid;
@@ -10,13 +15,26 @@ let newDate;
 // console.log(currentEvent)
 const APIAddress = 'http://127.0.0.1:8888'
 
-window.addEventListener('load', ()=>{
-    fetch(`${APIAddress}/api/schedules/${currentEvent}`)
-    .then(response=>response.json())
-    // .then(response => console.log(response.eventweek))
-    .then(response => displayCurrentEvent(response))
+window.addEventListener('load', (e) => {
+    const token = window.localStorage.getItem('x-authenticate-token');
+    const fetchOptions = {
+        headers: {'Content-Type': 'application/json'}
+    }
 
-    loadOtherEvents()
+    if (token) fetchOptions.headers['x-authenticate-token'] = token;
+    console.log(fetchOptions.headers);
+
+    if(token){
+        fetchOptions.method = 'GET';
+        fetch(`${APIAddress}/api/schedules/${currentEvent}`, fetchOptions)
+        
+        .then(response=>response.json())
+        // .then(response => console.log(response.eventweek))
+        .then(response => displayCurrentEvent(response))
+        .catch(console.error)
+        loadOtherEvents()
+
+    }
 })
 
 const calendarTemplate = [];
@@ -47,52 +65,63 @@ const calendarTemplate = [];
                     `
                     newDate.setHours(newDate.getHours() + 2 )
                 }
-                
-            }
-        }
+            };
+        };
     };
 
     // const eventData = [];
 
 const loadOtherEvents = function(){
-    fetch(`${APIAddress}/api/schedules/${currentEvent}`)
-    .then(response => response.json())
-    .then(response => getAllSchedules(response))
 
-    const getAllSchedules = function(data){
-        const totalSchedules = [];
-        const arrayOfSchedules = [];
-        const arrayOfUserSchedule = [];
-        let temporary;
-        let temporaryUser;
-        data.schedules.forEach(el =>{
-            if(el.userid == currentUserId){
-                temporaryUser = el.schedulearray.replace(/[\[\]\"']+/g,'')
-                arrayOfUserSchedule.push(temporaryUser)
-            }else{
-                temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
-                arrayOfSchedules.push(temporary)
-            }
-        })
-        
+    const token = window.localStorage.getItem('x-authenticate-token');
+    const fetchOptions = {
+        headers: {'Content-Type': 'application/json'}
+    }
 
-        const temp = document.querySelectorAll('.table-day');
-        const eventdata = []
-        temp.forEach(el=>{
-            eventdata.push(el.id)
-        })
-        // console.log(eventdata)
-        // const eventdata = [];
-        // temp.forEach(el=>{
-        //     eventdata.push(el.id)
-        //     console.log(eventdata)
-        // })
+    if (token) fetchOptions.headers['x-authenticate-token'] = token;
+    console.log(fetchOptions.headers);
 
-        setTimeout(compareSchedules(arrayOfSchedules,eventdata, arrayOfUserSchedule),1000)
+    if(token){
+        fetchOptions.method = 'GET';
+        fetch(`${APIAddress}/api/schedules/${currentEvent}`, fetchOptions)
+        .then(response => response.json())
+        .then(response => getAllSchedules(response))
+        .catch(console.error)
 
-        // console.log(eventdata)
-    };
+        const getAllSchedules = function(data){
+            const totalSchedules = [];
+            const arrayOfSchedules = [];
+            const arrayOfUserSchedule = [];
+            let temporary;
+            let temporaryUser;
+            data.schedules.forEach(el =>{
+                if(el.userid == currentUserId){
+                    temporaryUser = el.schedulearray.replace(/[\[\]\"']+/g,'')
+                    arrayOfUserSchedule.push(temporaryUser)
+                }else{
+                    temporary = el.schedulearray.replace(/[\[\]\"']+/g,'')
+                    arrayOfSchedules.push(temporary)
+                }
+            });
+            
 
+            const temp = document.querySelectorAll('.table-day');
+            const eventdata = []
+            temp.forEach(el=>{
+                eventdata.push(el.id)
+            });
+            // console.log(eventdata)
+            // const eventdata = [];
+            // temp.forEach(el=>{
+            //     eventdata.push(el.id)
+            //     console.log(eventdata)
+            // })
+
+            setTimeout(compareSchedules(arrayOfSchedules,eventdata, arrayOfUserSchedule),1000)
+
+            // console.log(eventdata)
+        };
+    }
     const compareSchedules = function(hours, timeslots, userhours){
         let counter = 0;
         let rgba = 0;
@@ -116,36 +145,37 @@ const loadOtherEvents = function(){
                     document.getElementById(`${el2}`).innerHTML += '| '
                     document.getElementById(`${el2}`).classList.add('active')
                     scheduledDays.push(el2)
-                }
-            })
-
-        })
-
+                };
+            });
+        });
     };
+};
 
-}
 console.log(currentUserId)
 const currentEventInt = parseInt(currentEvent, 10)
 console.log(typeof(currentEventInt));
 
-btnSubmitSchedule.addEventListener('click', () => {
+btnSubmitSchedule.addEventListener('click', (e) => {
+    const token = window.localStorage.getItem('x-authenticate-token');
+
     const newSchedulePayload = {
         'eventid': currentEventInt,
         'userid': currentUserId,
         'schedulearray': JSON.stringify(scheduledDays),
     }
-    
- 
 
     const fetchOptions = {
-        method: "POST",
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(newSchedulePayload)
+        body: JSON.stringify(newSchedulePayload),
     }
 
-    
-    fetch(`${APIAddress}/api/schedules/eventschedule`, fetchOptions)
+    if (token) fetchOptions.headers['x-authenticate-token'] = token;
+    console.log(fetchOptions.headers);
 
+    if (token){
+        fetchOptions.method = 'POST';
+        fetch(`${APIAddress}/api/schedules/eventschedule`, fetchOptions)
+    }
 })
 
     setTimeout(function(){
